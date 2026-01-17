@@ -3,549 +3,235 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hairkanics Studio | Premium Salon Experience</title>
+    <title>Hairkanics Studio - Book Appointment</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Preloader -->
-    <div class="preloader">
-        <div class="preloader-content">
-            <div class="loader"></div>
-            <div class="loader-text">HAIRKANICS STUDIO</div>
+    <!-- Spinner Loader -->
+    <div class="spinner-container" id="spinner">
+        <div class="spinner">
+            <div class="spinner-blade"></div>
+            <div class="spinner-blade"></div>
+            <div class="spinner-blade"></div>
+            <div class="spinner-blade"></div>
+            <div class="spinner-blade"></div>
+            <div class="spinner-blade"></div>
+            <div class="spinner-blade"></div>
+            <div class="spinner-blade"></div>
         </div>
+        <p class="spinner-text">Loading Hairkanics Studio...</p>
     </div>
 
-    <!-- WhatsApp Float -->
-    <a href="https://wa.me/2348021429974" class="whatsapp-float" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-        <span class="whatsapp-text">WhatsApp</span>
-    </a>
+    <!-- Exit Button -->
+    <div class="exit-container">
+        <button class="exit-btn" id="exitBtn">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
 
-    <!-- Navigation -->
-    <header class="header">
-        <div class="container">
-            <nav class="navbar">
-                <a href="#home" class="logo">
-                    <span class="logo-main">HAIRKANICS</span>
-                    <span class="logo-divider">|</span>
-                    <span class="logo-sub">STUDIO</span>
-                </a>
-                
-                <div class="nav-menu-wrapper">
-                    <ul class="nav-menu">
-                        <li class="nav-item">
-                            <a href="#home" class="nav-link">
-                                <span class="link-text">Home</span>
-                                <span class="link-underline"></span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#services" class="nav-link">
-                                <span class="link-text">Services</span>
-                                <span class="link-underline"></span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#gallery" class="nav-link">
-                                <span class="link-text">Gallery</span>
-                                <span class="link-underline"></span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#contact" class="nav-link">
-                                <span class="link-text">Contact</span>
-                                <span class="link-underline"></span>
-                            </a>
-                        </li>
-                    </ul>
-                    
-                    <div class="nav-actions">
-                        <a href="tel:08021429974" class="nav-phone">
-                            <i class="fas fa-phone"></i>
-                            <span class="phone-text">0802 142 9974</span>
-                        </a>
-                        <a href="#booking" class="btn-book">
-                            <span>Book Now</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <button class="hamburger" aria-label="Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </nav>
-        </div>
-    </header>
+    <div class="container">
+        <header>
+            <h1 class="logo">Hairkanics</h1>
+            <h2 class="studio">Studio</h2>
+            <p class="tagline">Cuts • Styles • Beauty</p>
+        </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-background"></div>
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-badge">
-                    <span>PREMIUM SALON</span>
-                    <div class="badge-line"></div>
+        <main>
+            <div class="contact-info">
+                <div class="address">
+                    <i class="fas fa-map-marker-alt"></i>
+                    #10 Osongama Estate Rd. by the Traffic Light – Uyo
                 </div>
-                
-                <h1 class="hero-title">
-                    <span class="title-line">Elevate Your Style</span>
-                    <span class="title-line">With Precision</span>
-                </h1>
-                
-                <p class="hero-subtitle">
-                    Experience premium hair cuts, nail services, braids & unisex salon treatments in Uyo's most sophisticated studio.
-                </p>
-                
-                <div class="hero-actions">
-                    <a href="#booking" class="btn-primary">
-                        <span>Book Appointment</span>
-                        <i class="fas fa-calendar-alt"></i>
-                    </a>
-                    <a href="#services" class="btn-secondary">
-                        <span>View Services</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
+                <div class="email">
+                    <i class="fas fa-envelope"></i>
+                    hairkanics@gmail.com
                 </div>
-                
-                <div class="hero-scroll">
-                    <div class="scroll-indicator"></div>
-                    <span>Scroll to explore</span>
+                <div class="phone">
+                    <i class="fas fa-phone"></i>
+                    Book Now: (123) 456-7890
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-label">Our Services</div>
-                <h2 class="section-title">Premium Grooming Services</h2>
-                <p class="section-subtitle">Expert care for hair, nails, and style</p>
-            </div>
-            
-            <div class="services-grid">
-                <!-- Hair Cuts -->
-                <div class="service-card">
-                    <div class="service-image">
-                        <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Hair Cuts">
-                        <div class="service-overlay"></div>
-                        <div class="service-number">01</div>
-                    </div>
-                    <div class="service-content">
-                        <div class="service-icon">
-                            <i class="fas fa-cut"></i>
-                        </div>
-                        <h3 class="service-title">Hair Cuts & Styling</h3>
-                        <p class="service-description">
-                            Precision cuts and styling tailored to your personality and lifestyle.
-                        </p>
-                        <a href="#booking" class="service-link">
-                            <span>Book Service</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
+            <!-- Booking Form -->
+            <div class="booking-section">
+                <h3 class="form-title">
+                    <i class="fas fa-calendar-check"></i> Book Your Appointment
+                </h3>
                 
-                <!-- Nail Services -->
-                <div class="service-card">
-                    <div class="service-image">
-                        <img src="https://images.unsplash.com/photo-1607778496801-0c0c31d79d1c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Nail Services">
-                        <div class="service-overlay"></div>
-                        <div class="service-number">02</div>
-                    </div>
-                    <div class="service-content">
-                        <div class="service-icon">
-                            <i class="fas fa-hand-sparkles"></i>
-                        </div>
-                        <h3 class="service-title">Nail Services</h3>
-                        <p class="service-description">
-                            Manicures, pedicures, and nail art with premium products.
-                        </p>
-                        <a href="#booking" class="service-link">
-                            <span>Book Service</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Unisex Salon -->
-                <div class="service-card">
-                    <div class="service-image">
-                        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Unisex Salon">
-                        <div class="service-overlay"></div>
-                        <div class="service-number">03</div>
-                    </div>
-                    <div class="service-content">
-                        <div class="service-icon">
-                            <i class="fas fa-user-friends"></i>
-                        </div>
-                        <h3 class="service-title">Unisex Salon</h3>
-                        <p class="service-description">
-                            Professional grooming services for all genders in a comfortable environment.
-                        </p>
-                        <a href="#booking" class="service-link">
-                            <span>Book Service</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Braids -->
-                <div class="service-card">
-                    <div class="service-image">
-                        <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Braids">
-                        <div class="service-overlay"></div>
-                        <div class="service-number">04</div>
-                    </div>
-                    <div class="service-content">
-                        <div class="service-icon">
-                            <i class="fas fa-braille"></i>
-                        </div>
-                        <h3 class="service-title">Braids & Extensions</h3>
-                        <p class="service-description">
-                            Expert braiding techniques and premium extensions for lasting style.
-                        </p>
-                        <a href="#booking" class="service-link">
-                            <span>Book Service</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section class="gallery" id="gallery">
-        <div class="container">
-            <div class="section-header">
-                <div class="section-label">Our Studio</div>
-                <h2 class="section-title">The Hairkanics Experience</h2>
-                <p class="section-subtitle">Step into our world of style and sophistication</p>
-            </div>
-            
-            <div class="gallery-grid">
-                <div class="gallery-item main">
-                    <img src="https://images.unsplash.com/photo-1634942537034-2531766767d1?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Studio Interior">
-                    <div class="gallery-caption">
-                        <h3>Main Studio</h3>
-                        <p>Elegant and sophisticated</p>
-                    </div>
-                </div>
-                
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Salon Chair">
-                    <div class="gallery-caption">
-                        <h3>Premium Seating</h3>
-                        <p>Comfort and style</p>
-                    </div>
-                </div>
-                
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Tools">
-                    <div class="gallery-caption">
-                        <h3>Professional Tools</h3>
-                        <p>Quality equipment</p>
-                    </div>
-                </div>
-                
-                <div class="gallery-item">
-                    <img src="https://images.unsplash.com/photo-1560851248-5c5e63d04c13?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Results">
-                    <div class="gallery-caption">
-                        <h3>Client Results</h3>
-                        <p>Beautiful transformations</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <div class="contact-wrapper">
-                <div class="contact-info">
-                    <div class="section-header">
-                        <div class="section-label">Visit Us</div>
-                        <h2 class="section-title">Contact Information</h2>
-                    </div>
-                    
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div class="contact-text">
-                                <h3>Location</h3>
-                                <p>10 Osogngoma Road<br>Uyo, Akwa Ibom State</p>
-                            </div>
+                <form id="bookingForm" class="booking-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fullName">
+                                <i class="fas fa-user"></i> Full Name
+                            </label>
+                            <input type="text" id="fullName" required placeholder="Enter your full name">
                         </div>
                         
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <div class="contact-text">
-                                <h3>Phone Number</h3>
-                                <a href="tel:08021429974" class="phone-number-display">
-                                    <span class="phone-digits">0802 142 9974</span>
-                                    <span class="phone-call">Click to call</span>
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-clock"></i>
-                            </div>
-                            <div class="contact-text">
-                                <h3>Opening Hours</h3>
-                                <div class="hours">
-                                    <div class="hour-item">
-                                        <span>Mon - Fri</span>
-                                        <span>9:00 AM - 8:00 PM</span>
-                                    </div>
-                                    <div class="hour-item">
-                                        <span>Saturday</span>
-                                        <span>10:00 AM - 7:00 PM</span>
-                                    </div>
-                                    <div class="hour-item">
-                                        <span>Sunday</span>
-                                        <span>12:00 PM - 6:00 PM</span>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="form-group">
+                            <label for="phone">
+                                <i class="fas fa-phone"></i> Phone Number
+                            </label>
+                            <input type="tel" id="phone" required placeholder="Enter your phone number">
                         </div>
                     </div>
-                    
-                    <div class="contact-cta">
-                        <a href="tel:08021429974" class="btn-call">
-                            <i class="fas fa-phone-alt"></i>
-                            <span>Call Now</span>
-                        </a>
-                        <a href="https://wa.me/2348021429974" class="btn-whatsapp" target="_blank">
-                            <i class="fab fa-whatsapp"></i>
-                            <span>WhatsApp</span>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="contact-map">
-                    <div class="map-container">
-                        <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3975.196058968122!2d7.92614497493281!3d4.90044509508876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1067db6f6f3c736f%3A0x2b783a743129444f!2sUyo%2C%20Akwa%20Ibom!5e0!3m2!1sen!2sng!4v1700000000000!5m2!1sen!2sng" 
-                            allowfullscreen="" 
-                            loading="lazy" 
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
-                        <div class="map-overlay">
-                            <i class="fas fa-map-pin"></i>
-                            <div class="map-tooltip">
-                                <strong>Hairkanics Studio</strong>
-                                <span>10 Osogngoma Road, Uyo</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Booking Section -->
-    <section class="booking" id="booking">
-        <div class="container">
-            <div class="booking-wrapper">
-                <div class="booking-form-container">
-                    <div class="section-header">
-                        <div class="section-label">Book Now</div>
-                        <h2 class="section-title">Schedule Your Visit</h2>
-                        <p class="section-subtitle">Fill out the form to book your appointment</p>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">
+                                <i class="fas fa-envelope"></i> Email Address
+                            </label>
+                            <input type="email" id="email" required placeholder="Enter your email">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="date">
+                                <i class="fas fa-calendar-day"></i> Preferred Date
+                            </label>
+                            <input type="date" id="date" required>
+                        </div>
                     </div>
-                    
-                    <form class="booking-form">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="name">Full Name</label>
-                                <input type="text" id="name" placeholder="Enter your name" required>
-                                <div class="form-line"></div>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Phone Number</label>
-                                <input type="tel" id="phone" placeholder="0802 142 9974" required>
-                                <div class="form-line"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="service">Service</label>
-                                <select id="service" required>
-                                    <option value="" disabled selected>Select a service</option>
-                                    <option value="haircut">Hair Cut</option>
-                                    <option value="nails">Nail Service</option>
-                                    <option value="braids">Braids</option>
-                                    <option value="consultation">Consultation</option>
-                                </select>
-                                <div class="form-line"></div>
-                                <i class="fas fa-chevron-down select-arrow"></i>
-                            </div>
-                            <div class="form-group">
-                                <label for="date">Preferred Date</label>
-                                <input type="date" id="date" required>
-                                <div class="form-line"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group full-width">
-                            <label for="message">Additional Notes (Optional)</label>
-                            <textarea id="message" placeholder="Any special requests..."></textarea>
-                            <div class="form-line"></div>
-                        </div>
-                        
-                        <button type="submit" class="btn-submit">
-                            <span>Book Appointment</span>
-                            <i class="fas fa-paper-plane"></i>
+
+                    <div class="form-group">
+                        <label for="service">
+                            <i class="fas fa-cut"></i> Select Service
+                        </label>
+                        <select id="service" required>
+                            <option value="">Choose a service</option>
+                            <option value="male-grooming">Male Grooming</option>
+                            <option value="premium-haircut">Premium Haircut/Fade</option>
+                            <option value="hair-treatment">Hair Treatment</option>
+                            <option value="female-styling">Female Styling & Bridal</option>
+                            <option value="extensions">Extensions</option>
+                            <option value="dreadlocks">Dreadlocks</option>
+                            <option value="nails">Nails Grooming</option>
+                            <option value="pedicure-manicure">Pedicure/Manicure</option>
+                            <option value="private-booking">Private Booking</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="time">
+                            <i class="fas fa-clock"></i> Preferred Time
+                        </label>
+                        <select id="time" required>
+                            <option value="">Select time slot</option>
+                            <option value="9am">9:00 AM</option>
+                            <option value="10am">10:00 AM</option>
+                            <option value="11am">11:00 AM</option>
+                            <option value="12pm">12:00 PM</option>
+                            <option value="1pm">1:00 PM</option>
+                            <option value="2pm">2:00 PM</option>
+                            <option value="3pm">3:00 PM</option>
+                            <option value="4pm">4:00 PM</option>
+                            <option value="5pm">5:00 PM</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">
+                            <i class="fas fa-comment"></i> Additional Notes
+                        </label>
+                        <textarea id="message" placeholder="Any special requests or notes..."></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i> Book Appointment
                         </button>
-                    </form>
-                </div>
-                
-                <div class="booking-info">
-                    <div class="info-card">
-                        <h3><i class="fas fa-star"></i> Why Choose Us</h3>
-                        <ul class="benefits">
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                <div>
-                                    <h4>Expert Stylists</h4>
-                                    <p>Certified professionals with years of experience</p>
-                                </div>
-                            </li>
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                <div>
-                                    <h4>Premium Products</h4>
-                                    <p>High-quality tools and products</p>
-                                </div>
-                            </li>
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                <div>
-                                    <h4>Clean Environment</h4>
-                                    <p>Sanitized and comfortable studio</p>
-                                </div>
-                            </li>
-                            <li>
-                                <i class="fas fa-check-circle"></i>
-                                <div>
-                                    <h4>Personalized Service</h4>
-                                    <p>Tailored to your unique style</p>
-                                </div>
-                            </li>
-                        </ul>
+                        <button type="reset" class="reset-btn">
+                            <i class="fas fa-redo"></i> Clear Form
+                        </button>
                     </div>
-                    
-                    <div class="info-card contact-card">
-                        <h3><i class="fas fa-headset"></i> Need Help?</h3>
-                        <div class="contact-options">
-                            <a href="tel:08021429974" class="contact-option">
-                                <i class="fas fa-phone"></i>
-                                <div>
-                                    <h4>Call Directly</h4>
-                                    <p class="phone">0802 142 9974</p>
-                                </div>
-                            </a>
-                            <a href="https://wa.me/2348021429974" class="contact-option" target="_blank">
-                                <i class="fab fa-whatsapp"></i>
-                                <div>
-                                    <h4>WhatsApp</h4>
-                                    <p>Quick response</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                </form>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <a href="#home" class="logo">
-                        <span class="logo-main">HAIRKANICS</span>
-                        <span class="logo-divider">|</span>
-                        <span class="logo-sub">STUDIO</span>
-                    </a>
-                    <p class="footer-tagline">
-                        Premium salon services in Uyo. Specializing in cuts, nails, braids & unisex salon services.
-                    </p>
-                    <div class="footer-contact">
-                        <a href="tel:08021429974" class="footer-phone">
-                            <i class="fas fa-phone"></i>
-                            <span>0802 142 9974</span>
-                        </a>
-                        <div class="footer-address">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>10 Osogngoma Road, Uyo</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="footer-links">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#gallery">Gallery</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="#booking">Book Now</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-services">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="#booking">Hair Cuts</a></li>
-                        <li><a href="#booking">Nail Services</a></li>
-                        <li><a href="#booking">Braids</a></li>
-                        <li><a href="#booking">Unisex Salon</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-social">
-                    <h4>Follow Us</h4>
-                    <div class="social-icons">
-                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                    </div>
-                    <div class="newsletter">
-                        <p>Subscribe for updates</p>
-                        <form class="newsletter-form">
-                            <input type="email" placeholder="Your email">
-                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
-                        </form>
-                    </div>
+                <div class="booking-success" id="successMessage">
+                    <i class="fas fa-check-circle"></i>
+                    <h4>Booking Successful!</h4>
+                    <p>Thank you for booking with Hairkanics Studio. We'll confirm your appointment shortly.</p>
+                    <button class="close-success" id="closeSuccess">OK</button>
                 </div>
             </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; <span id="currentYear"></span> Hairkanics Studio. All rights reserved.</p>
-                <div class="footer-legal">
-                    <a href="#">Privacy Policy</a>
-                    <a href="#">Terms of Service</a>
+
+            <!-- Services Display -->
+            <div class="services-grid">
+                <div class="service-section">
+                    <h3 class="section-title">The core:</h3>
+                    <ul class="service-list">
+                        <li><span class="bullet">•</span> Male grooming</li>
+                        <li><span class="bullet">•</span> Premium Haircut/Fade</li>
+                        <li><span class="bullet">•</span> Hair treatment</li>
+                        <li><span class="bullet">•</span> Private bookings</li>
+                    </ul>
                 </div>
+
+                <div class="service-section">
+                    <h3 class="section-title">Uplift moments:</h3>
+                    <ul class="service-list">
+                        <li><span class="bullet">•</span> Female styling and Bridal</li>
+                        <li><span class="bullet">•</span> Extensions</li>
+                        <li><span class="bullet">•</span> Dreadlocks</li>
+                    </ul>
+                </div>
+
+                <div class="service-section">
+                    <h3 class="section-title">Mibogo Center:</h3>
+                    <ul class="service-list">
+                        <li><span class="bullet">•</span> Nails grooming</li>
+                        <li><span class="bullet">•</span> Pedicure/Manicure</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Quick Action Buttons -->
+            <div class="quick-actions">
+                <a href="mailto:hairkanics@gmail.com" class="action-btn">
+                    <i class="fas fa-envelope"></i> Email Us
+                </a>
+                <a href="tel:+1234567890" class="action-btn">
+                    <i class="fas fa-phone"></i> Call Now
+                </a>
+                <button class="action-btn" id="bookAgainBtn">
+                    <i class="fas fa-calendar-plus"></i> Book Another
+                </button>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-email">
+                    <i class="fas fa-envelope"></i> hairkanics@gmail.com
+                </div>
+                <div class="footer-address">
+                    <i class="fas fa-map-marker-alt"></i> #10 Osongama Estate Rd. by the Traffic Light – Uyo
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+                <div class="copyright">
+                    © Hairkanics Studio. All rights reserved.
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Exit Confirmation Modal -->
+    <div class="modal" id="exitModal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fas fa-sign-out-alt"></i>
+            </div>
+            <h3>Leave Hairkanics Studio?</h3>
+            <p>Are you sure you want to exit? Don't forget to book your appointment!</p>
+            <div class="modal-buttons">
+                <button id="cancelExit" class="modal-btn cancel">Stay Here</button>
+                <button id="confirmExit" class="modal-btn confirm">Exit</button>
             </div>
         </div>
-    </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>
