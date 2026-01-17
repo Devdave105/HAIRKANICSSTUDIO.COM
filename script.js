@@ -1,22 +1,61 @@
-// DOM Ready Function
+// DOM Ready
 document.addEventListener('DOMContentLoaded', function() {
-    // Set current year in footer
+    // Set current year
     document.getElementById('currentYear').textContent = new Date().getFullYear();
     
-    // Mobile Navigation Toggle
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
-    
-    hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
+    // Preloader
+    const preloader = document.querySelector('.preloader');
+    window.addEventListener('load', function() {
+        setTimeout(() => {
+            preloader.classList.add('fade-out');
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500);
+        }, 1000);
     });
     
-    // Close mobile menu when clicking on a link
-    document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-    }));
+    // Header scroll effect
+    const header = document.querySelector('.header');
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+    
+    // Mobile menu toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu-wrapper');
+    
+    hamburger.addEventListener('click', function() {
+        this.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        
+        // Close when clicking outside
+        if (navMenu.classList.contains('active')) {
+            document.addEventListener('click', closeMenuOnClickOutside);
+        } else {
+            document.removeEventListener('click', closeMenuOnClickOutside);
+        }
+    });
+    
+    function closeMenuOnClickOutside(e) {
+        if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.removeEventListener('click', closeMenuOnClickOutside);
+        }
+    }
+    
+    // Close mobile menu when clicking links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            document.removeEventListener('click', closeMenuOnClickOutside);
+        });
+    });
     
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -36,13 +75,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Form submission handling
-    const appointmentForm = document.getElementById('appointmentForm');
-    if (appointmentForm) {
-        appointmentForm.addEventListener('submit', function(e) {
+    // Phone number click feedback
+    const phoneNumbers = document.querySelectorAll('a[href^="tel:"]');
+    phoneNumbers.forEach(phone => {
+        phone.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768) {
+                // Add visual feedback on mobile
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 200);
+            }
+        });
+    });
+    
+    // Booking form submission
+    const bookingForm = document.querySelector('.booking-form');
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get form data
+            // Get form values
             const formData = {
                 name: document.getElementById('name').value,
                 phone: document.getElementById('phone').value,
@@ -51,266 +104,268 @@ document.addEventListener('DOMContentLoaded', function() {
                 message: document.getElementById('message').value
             };
             
-            // In a real application, you would send this data to a server
-            // For demo purposes, we'll just show an alert
-            alert(`Thank you for booking, ${formData.name}! We'll contact you at ${formData.phone} to confirm your appointment for ${formData.service} on ${formData.date}.`);
+            // Simple validation
+            if (!formData.name || !formData.phone || !formData.service || !formData.date) {
+                alert('Please fill in all required fields.');
+                return;
+            }
             
-            // Reset form
-            appointmentForm.reset();
+            // Format date for display
+            const dateObj = new Date(formData.date);
+            const formattedDate = dateObj.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Service names mapping
+            const serviceNames = {
+                'haircut': 'Hair Cut',
+                'nails': 'Nail Service',
+                'braids': 'Braids',
+                'consultation': 'Consultation'
+            };
+            
+            // Create success message
+            const successMessage = `
+                <div class="booking-success">
+                    <h3>Appointment Requested!</h3>
+                    <p><strong>Name:</strong> ${formData.name}</p>
+                    <p><strong>Phone:</strong> ${formData.phone}</p>
+                    <p><strong>Service:</strong> ${serviceNames[formData.service] || formData.service}</p>
+                    <p><strong>Date:</strong> ${formattedDate}</p>
+                    ${formData.message ? `<p><strong>Notes:</strong> ${formData.message}</p>` : ''}
+                    <p class="success-note">We'll contact you shortly to confirm your appointment.</p>
+                    <button class="btn-close-modal">Close</button>
+                </div>
+            `;
+            
+            // Create and show modal
+            const modal = document.createElement('div');
+            modal.className = 'booking-modal';
+            modal.innerHTML = successMessage;
+            
+            const modalContent = modal.querySelector('.booking-success');
+            modalContent.style.animation = 'fadeIn 0.3s ease';
+            
+            // Add modal styles
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(10, 10, 10, 0.95);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 9999;
+                backdrop-filter: blur(10px);
+            `;
+            
+            modalContent.style.cssText = `
+                background: var(--dark-surface);
+                padding: 40px;
+                border-radius: 5px;
+                border: 1px solid var(--border-color);
+                max-width: 500px;
+                width: 90%;
+                text-align: center;
+            `;
+            
+            modalContent.querySelector('h3').style.cssText = `
+                color: var(--primary-gold);
+                margin-bottom: 20px;
+                font-family: 'Playfair Display', serif;
+                font-size: 1.5rem;
+            `;
+            
+            modalContent.querySelectorAll('p').forEach(p => {
+                p.style.marginBottom = '10px';
+                p.style.textAlign = 'left';
+            });
+            
+            const closeBtn = modalContent.querySelector('.btn-close-modal');
+            closeBtn.style.cssText = `
+                margin-top: 20px;
+                padding: 12px 30px;
+                background: var(--primary-gold);
+                color: var(--dark-bg);
+                border: none;
+                border-radius: 2px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: var(--transition);
+            `;
+            
+            closeBtn.addEventListener('mouseenter', () => {
+                closeBtn.style.transform = 'translateY(-2px)';
+                closeBtn.style.boxShadow = '0 5px 15px rgba(212, 175, 55, 0.3)';
+            });
+            
+            closeBtn.addEventListener('mouseleave', () => {
+                closeBtn.style.transform = '';
+                closeBtn.style.boxShadow = '';
+            });
+            
+            closeBtn.addEventListener('click', () => {
+                modal.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(modal);
+                    bookingForm.reset();
+                    // Reset date to tomorrow
+                    const tomorrow = new Date();
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    document.getElementById('date').value = tomorrow.toISOString().split('T')[0];
+                }, 300);
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.opacity = '0';
+                    setTimeout(() => {
+                        document.body.removeChild(modal);
+                        bookingForm.reset();
+                        // Reset date to tomorrow
+                        const tomorrow = new Date();
+                        tomorrow.setDate(tomorrow.getDate() + 1);
+                        document.getElementById('date').value = tomorrow.toISOString().split('T')[0];
+                    }, 300);
+                }
+            });
+            
+            document.body.appendChild(modal);
+            
+            // Add CSS animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(-20px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                
+                .success-note {
+                    font-style: italic;
+                    color: var(--medium-text);
+                    margin-top: 20px !important;
+                    text-align: center !important;
+                }
+            `;
+            document.head.appendChild(style);
         });
     }
     
-    // Set minimum date for appointment booking to today
+    // Set minimum date to today
     const dateInput = document.getElementById('date');
     if (dateInput) {
         const today = new Date().toISOString().split('T')[0];
         dateInput.setAttribute('min', today);
+        
+        // Set default to tomorrow
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        dateInput.value = tomorrow.toISOString().split('T')[0];
     }
     
-    // Header scroll effect
-    window.addEventListener('scroll', () => {
-        const header = document.querySelector('.header');
-        if (window.scrollY > 100) {
-            header.style.backgroundColor = 'rgba(10, 10, 10, 0.98)';
-            header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
-        } else {
-            header.style.backgroundColor = 'rgba(10, 10, 10, 0.95)';
-            header.style.boxShadow = 'none';
-        }
+    // Gallery hover effect
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    galleryItems.forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            item.style.transform = 'translateY(-5px)';
+        });
+        
+        item.addEventListener('mouseleave', () => {
+            item.style.transform = 'translateY(0)';
+        });
     });
     
-    // Service card animation on scroll
+    // Service card animation
+    const serviceCards = document.querySelectorAll('.service-card');
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
     
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
+        entries.forEach((entry, index) => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('animated');
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 100);
             }
         });
     }, observerOptions);
     
-    // Observe service cards
-    document.querySelectorAll('.service-card').forEach(card => {
+    serviceCards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         observer.observe(card);
     });
     
-    // MOBILE HOVER SUPPORT
-    // Check if device is touch-enabled
-    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    
-    if (isTouchDevice) {
-        // Add mobile hover classes on touch
-        enableMobileHoverEffects();
-        
-        // Handle map hover on mobile
-        enableMapHoverMobile();
-    }
-    
-    // Gallery hover effects for mobile
-    enableGalleryHoverMobile();
-    
-    // Service card hover for mobile
-    enableServiceCardHoverMobile();
-});
-
-// Functions for Mobile Hover Support
-function enableMobileHoverEffects() {
-    // Navigation links
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            this.classList.add('mobile-hover');
-        });
-        
-        link.addEventListener('touchend', function() {
-            setTimeout(() => {
-                this.classList.remove('mobile-hover');
-            }, 300);
-        });
-    });
-    
-    // Buttons
-    const buttons = document.querySelectorAll('.btn-primary, .btn-secondary, .booking-link');
-    buttons.forEach(button => {
-        button.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            this.classList.add('mobile-hover');
-        });
-        
-        button.addEventListener('touchend', function() {
-            setTimeout(() => {
-                this.classList.remove('mobile-hover');
-            }, 300);
-        });
-    });
-    
-    // Service cards
-    const serviceCards = document.querySelectorAll('.service-card');
-    serviceCards.forEach(card => {
-        card.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            this.classList.add('mobile-hover');
-        });
-        
-        card.addEventListener('touchend', function() {
-            setTimeout(() => {
-                this.classList.remove('mobile-hover');
-            }, 300);
-        });
-    });
-    
-    // Service links
-    const serviceLinks = document.querySelectorAll('.service-link');
-    serviceLinks.forEach(link => {
-        link.addEventListener('touchstart', function(e) {
-            e.stopPropagation();
-            this.classList.add('mobile-hover');
-        });
-        
-        link.addEventListener('touchend', function() {
-            setTimeout(() => {
-                this.classList.remove('mobile-hover');
-            }, 300);
-        });
-    });
-    
-    // Phone number hover
-    const phoneNumber = document.querySelector('.phone-number');
-    if (phoneNumber) {
-        phoneNumber.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            this.classList.add('mobile-hover');
-        });
-        
-        phoneNumber.addEventListener('touchend', function() {
-            setTimeout(() => {
-                this.classList.remove('mobile-hover');
-            }, 300);
-        });
-    }
-}
-
-function enableMapHoverMobile() {
-    const mapContainer = document.querySelector('.map-container');
-    if (mapContainer) {
-        mapContainer.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            const markerTooltip = this.querySelector('.marker-tooltip');
-            if (markerTooltip) {
-                markerTooltip.style.opacity = '1';
-                markerTooltip.style.visibility = 'visible';
-            }
-        });
-        
-        mapContainer.addEventListener('touchend', function() {
-            setTimeout(() => {
-                const markerTooltip = this.querySelector('.marker-tooltip');
-                if (markerTooltip) {
-                    markerTooltip.style.opacity = '0';
-                    markerTooltip.style.visibility = 'hidden';
+    // Phone number copy feedback (mobile)
+    if ('ontouchstart' in window) {
+        const phoneLinks = document.querySelectorAll('.phone-number-display, .nav-phone, .footer-phone');
+        phoneLinks.forEach(link => {
+            link.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 1) {
+                    this.style.transform = 'scale(0.95)';
                 }
-            }, 2000);
-        });
-    }
-}
-
-function enableGalleryHoverMobile() {
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    galleryItems.forEach(item => {
-        item.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            const overlay = this.querySelector('.gallery-overlay');
-            const img = this.querySelector('img');
+            });
             
-            if (overlay) {
-                overlay.style.opacity = '1';
-                overlay.style.transform = 'translateY(0)';
-            }
-            
-            if (img) {
-                img.style.transform = 'scale(1.05)';
-            }
-        });
-        
-        item.addEventListener('touchend', function() {
-            setTimeout(() => {
-                const overlay = this.querySelector('.gallery-overlay');
-                const img = this.querySelector('img');
-                
-                if (overlay) {
-                    overlay.style.opacity = '0';
-                    overlay.style.transform = 'translateY(10px)';
-                }
-                
-                if (img) {
-                    img.style.transform = 'scale(1)';
-                }
-            }, 2000);
-        });
-    });
-}
-
-function enableServiceCardHoverMobile() {
-    const serviceCards = document.querySelectorAll('.service-card');
-    serviceCards.forEach(card => {
-        card.addEventListener('touchstart', function(e) {
-            e.preventDefault();
-            const img = this.querySelector('.service-image img');
-            
-            if (img) {
-                img.style.transform = 'scale(1.05)';
-            }
-            
-            // Add visual feedback
-            this.style.borderColor = 'var(--primary-color)';
-            this.style.transform = 'translateY(-5px)';
-            this.style.boxShadow = 'var(--shadow)';
-        });
-        
-        card.addEventListener('touchend', function() {
-            setTimeout(() => {
-                const img = this.querySelector('.service-image img');
-                
-                if (img) {
-                    img.style.transform = 'scale(1)';
-                }
-                
-                // Remove visual feedback
-                this.style.borderColor = '';
+            link.addEventListener('touchend', function() {
                 this.style.transform = '';
-                this.style.boxShadow = '';
-            }, 1000);
+            });
         });
-    });
-}
-
-// Double-tap detection for better mobile experience
-let lastTap = 0;
-document.addEventListener('touchend', function(event) {
-    const currentTime = new Date().getTime();
-    const tapLength = currentTime - lastTap;
-    
-    if (tapLength < 300 && tapLength > 0) {
-        // Double tap detected - prevent zoom
-        event.preventDefault();
     }
     
-    lastTap = currentTime;
+    // Newsletter form
+    const newsletterForm = document.querySelector('.newsletter-form');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            
+            if (email && email.includes('@')) {
+                this.querySelector('input').value = '';
+                this.querySelector('input').placeholder = 'Subscribed!';
+                setTimeout(() => {
+                    this.querySelector('input').placeholder = 'Your email';
+                }, 2000);
+            }
+        });
+    }
+    
+    // Fix for mobile viewport height
+    function setVH() {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+    }
+    
+    setVH();
+    window.addEventListener('resize', setVH);
+    
+    // Add animation to WhatsApp float
+    const whatsappFloat = document.querySelector('.whatsapp-float');
+    if (whatsappFloat) {
+        setInterval(() => {
+            whatsappFloat.style.transform = 'translateY(-5px)';
+            setTimeout(() => {
+                whatsappFloat.style.transform = 'translateY(0)';
+            }, 500);
+        }, 3000);
+    }
 });
 
-// Prevent scrolling when interacting with hover elements on mobile
-document.addEventListener('touchstart', function(e) {
-    if (e.target.closest('.service-card') || 
-        e.target.closest('.gallery-item') || 
-        e.target.closest('.nav-link') ||
-        e.target.closest('.btn-primary') ||
-        e.target.closest('.btn-secondary')) {
-        // Allow default behavior for interactive elements
-        return;
+// Parallax effect for hero
+window.addEventListener('scroll', function() {
+    const scrolled = window.pageYOffset;
+    const hero = document.querySelector('.hero');
+    
+    if (hero && window.innerWidth > 768) {
+        const rate = scrolled * 0.5;
+        hero.style.backgroundPositionY = `${rate}px`;
     }
-}, { passive: true });
+});
