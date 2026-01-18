@@ -14,6 +14,7 @@ body {
     align-items: center;
     padding: 20px;
     position: relative;
+    overflow-x: hidden;
 }
 
 /* Remove default link styling */
@@ -28,7 +29,7 @@ a {
     width: 60px;
     height: 60px;
     bottom: 30px;
-    left: 30px;
+    right: 30px;
     background-color: #25D366;
     color: white;
     border-radius: 50%;
@@ -56,17 +57,11 @@ a {
     animation: none;
 }
 
-.whatsapp-float:hover .whatsapp-tooltip {
-    opacity: 1;
-    transform: translateX(0);
-    visibility: visible;
-}
-
 .whatsapp-tooltip {
     position: absolute;
     right: 70px;
     top: 50%;
-    transform: translateY(-50%) translateX(-10px);
+    transform: translateY(-50%);
     background: #222;
     color: white;
     padding: 8px 15px;
@@ -92,6 +87,12 @@ a {
     border-top: 6px solid transparent;
     border-bottom: 6px solid transparent;
     border-left: 6px solid #222;
+}
+
+.whatsapp-float:hover .whatsapp-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(-50%) translateX(0);
 }
 
 /* Spinner Styles */
@@ -586,6 +587,15 @@ header::after {
     font-size: 16px;
 }
 
+.confirmation-details {
+    color: #666;
+    font-style: italic;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #c19a6b;
+}
+
 .whatsapp-suggestion {
     color: #25D366 !important;
     font-weight: 600;
@@ -606,6 +616,7 @@ header::after {
     font-weight: 600;
     font-size: 16px;
     transition: all 0.3s ease;
+    margin-top: 10px;
 }
 
 .close-success:hover {
@@ -902,6 +913,12 @@ footer {
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 95%;
+    }
+}
+
 @media (max-width: 992px) {
     .contact-info {
         flex-direction: column;
@@ -928,11 +945,19 @@ footer {
         height: 55px;
         font-size: 28px;
         bottom: 25px;
-        left: 25px;
+        right: 25px;
+    }
+    
+    .whatsapp-tooltip {
+        right: 65px;
     }
 }
 
 @media (max-width: 768px) {
+    body {
+        padding: 15px;
+    }
+    
     .container {
         margin-top: 60px;
     }
@@ -983,11 +1008,13 @@ footer {
     .quick-actions {
         flex-direction: column;
         align-items: center;
+        gap: 15px;
     }
     
     .action-btn {
         width: 100%;
         max-width: 300px;
+        min-width: auto;
     }
     
     .modal-content {
@@ -1003,7 +1030,7 @@ footer {
         height: 50px;
         font-size: 26px;
         bottom: 20px;
-        left: 20px;
+        right: 20px;
     }
     
     .whatsapp-tooltip {
@@ -1011,15 +1038,20 @@ footer {
         padding: 6px 12px;
         right: 60px;
     }
+    
+    .booking-success {
+        padding: 25px 20px;
+    }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 576px) {
     body {
         padding: 10px;
     }
     
     .container {
         border-radius: 12px;
+        margin-top: 50px;
     }
     
     header {
@@ -1032,6 +1064,11 @@ footer {
     
     .studio {
         font-size: 24px;
+    }
+    
+    .tagline {
+        font-size: 14px;
+        letter-spacing: 2px;
     }
     
     .ads-container {
@@ -1056,6 +1093,10 @@ footer {
         padding-right: 20px;
     }
     
+    .contact-info > div {
+        font-size: 14px;
+    }
+    
     .btn-text {
         font-size: 15px;
     }
@@ -1070,6 +1111,7 @@ footer {
     .submit-btn, .reset-btn {
         padding: 15px;
         font-size: 15px;
+        min-height: 50px;
     }
     
     .whatsapp-float {
@@ -1077,10 +1119,59 @@ footer {
         height: 45px;
         font-size: 24px;
         bottom: 15px;
-        left: 15px;
+        right: 15px;
     }
     
     .whatsapp-tooltip {
-        display: none; /* Hide on very small screens */
+        display: none;
+    }
+    
+    .footer-email, .footer-address, .footer-phone, .footer-whatsapp {
+        font-size: 14px;
+    }
+    
+    .social-links {
+        gap: 20px;
+    }
+    
+    .social-link {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    .logo {
+        font-size: 32px;
+    }
+    
+    .studio {
+        font-size: 22px;
+    }
+    
+    .ad-title {
+        font-size: 16px;
+    }
+    
+    .ad-text {
+        font-size: 13px;
+    }
+    
+    .form-title {
+        font-size: 20px;
+    }
+    
+    .action-btn {
+        padding: 15px 20px;
+        font-size: 15px;
+    }
+    
+    .whatsapp-float {
+        width: 40px;
+        height: 40px;
+        font-size: 22px;
+        bottom: 10px;
+        right: 10px;
     }
 }

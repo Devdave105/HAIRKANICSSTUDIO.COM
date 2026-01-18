@@ -140,19 +140,60 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('WhatsApp button clicked');
     });
     
+    // Function to simulate sending email
+    function sendConfirmationEmail(formData) {
+        // This is a simulation - in a real app, you would use:
+        // 1. Backend API with Nodemailer, SendGrid, etc.
+        // 2. EmailJS service
+        // 3. Form submission to server-side script
+        
+        console.log('=== EMAIL SIMULATION START ===');
+        console.log('To:', formData.email);
+        console.log('From: hairkanics@gmail.com');
+        console.log('Subject: Appointment Request Confirmation - Hairkanics Studio');
+        console.log('\nEmail Content:');
+        console.log(`Dear ${formData.name},`);
+        console.log('Thank you for booking an appointment with Hairkanics Studio!');
+        console.log(`Your appointment details:`);
+        console.log(`- Service: ${formData.service}`);
+        console.log(`- Date: ${formData.date}`);
+        console.log(`- Time: ${formData.time}`);
+        console.log(`- Phone: ${formData.phone}`);
+        console.log('\nWe will review your request and confirm your appointment within 24 hours.');
+        console.log('\nIf you have any questions, please contact us:');
+        console.log('Phone: 0802 142 9974');
+        console.log('WhatsApp: 0802 142 9974');
+        console.log('Email: hairkanics@gmail.com');
+        console.log('Address: #10 Osongama Estate Rd. by the Traffic Light – Uyo');
+        console.log('\nBest regards,');
+        console.log('Hairkanics Studio Team');
+        console.log('=== EMAIL SIMULATION END ===');
+        
+        // Simulate email sending delay
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                // In a real app, this would be an API response
+                resolve({
+                    success: true,
+                    message: 'Email sent successfully'
+                });
+            }, 1000);
+        });
+    }
+    
     // Handle form submission
-    bookingForm.addEventListener('submit', function(e) {
+    bookingForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
         // Get form data
         const formData = {
-            name: document.getElementById('fullName').value,
-            phone: document.getElementById('phoneInput').value,
-            email: document.getElementById('email').value,
+            name: document.getElementById('fullName').value.trim(),
+            phone: document.getElementById('phoneInput').value.trim(),
+            email: document.getElementById('email').value.trim(),
             date: document.getElementById('date').value,
             service: document.getElementById('service').value,
             time: document.getElementById('time').value,
-            message: document.getElementById('message').value
+            message: document.getElementById('message').value.trim()
         };
         
         // Validate form
@@ -161,39 +202,116 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+            alert('Please enter a valid email address.');
+            return;
+        }
+        
+        // Validate phone number (at least 10 digits)
+        const phoneDigits = formData.phone.replace(/\D/g, '');
+        if (phoneDigits.length < 10) {
+            alert('Please enter a valid phone number (at least 10 digits).');
+            return;
+        }
+        
         // Show loading state on submit button
         const submitBtn = this.querySelector('.submit-btn');
         const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span class="btn-text">Processing...</span>';
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span class="btn-text">Sending Confirmation...</span>';
         submitBtn.disabled = true;
         
-        // Simulate API call/processing
-        setTimeout(() => {
-            // Hide form and show success message
-            bookingForm.style.display = 'none';
-            successMessage.style.display = 'block';
+        try {
+            // Send confirmation email (simulated)
+            const emailResult = await sendConfirmationEmail(formData);
             
+            if (emailResult.success) {
+                // Hide form and show success message
+                bookingForm.style.display = 'none';
+                successMessage.style.display = 'block';
+                
+                // Update success message with user's email
+                const successText = successMessage.querySelector('p');
+                successText.innerHTML = `Thank you for booking with Hairkanics Studio. We have sent a confirmation to <strong>${formData.email}</strong>.`;
+                
+                // Scroll to success message
+                successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // Show notification
+                showNotification('Confirmation email sent to your inbox!', 'success');
+                
+                // Log booking data
+                console.log('Booking Details Submitted:', formData);
+            }
+        } catch (error) {
+            console.error('Error sending email:', error);
+            alert('There was an error processing your booking. Please try again or contact us directly.');
+        } finally {
             // Reset button
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
-            
-            // Scroll to success message
-            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            // Log booking data (in real app, send to server)
-            console.log('Booking Details:', formData);
-            
-        }, 1500);
+        }
     });
+    
+    // Function to show notification
+    function showNotification(message, type) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+            <span>${message}</span>
+        `;
+        
+        // Add styles
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? '#4caf50' : '#f44336'};
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            animation: slideIn 0.3s ease;
+        `;
+        
+        // Add to document
+        document.body.appendChild(notification);
+        
+        // Remove after 5 seconds
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 5000);
+        
+        // Add CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
     
     // Close success message
     closeSuccess.addEventListener('click', () => {
         successMessage.style.display = 'none';
         bookingForm.style.display = 'block';
         bookingForm.reset();
-        
-        // Reset phone input to default
-        document.getElementById('phoneInput').value = '0802 142 9974';
         
         // Scroll to form
         bookingForm.scrollIntoView({ behavior: 'smooth' });
@@ -204,9 +322,6 @@ document.addEventListener('DOMContentLoaded', function() {
         successMessage.style.display = 'none';
         bookingForm.style.display = 'block';
         bookingForm.reset();
-        
-        // Reset phone input to default
-        document.getElementById('phoneInput').value = '0802 142 9974';
         
         // Scroll to form
         bookingForm.scrollIntoView({ behavior: 'smooth' });
